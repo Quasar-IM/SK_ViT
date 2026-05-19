@@ -1,0 +1,45 @@
+DATA:
+  SAMPLE_FRAMES: 32
+  SIZE: 256
+  CROP_SIZE: 256
+  MODALITY: 'SK_MAGA_SKELETON'
+  TRAIN:
+    SAMPLER_MODE: 'RANDOMLY'
+    DATASET_NAME: iMiGUE_train_full_plus_official_val
+  VAL:
+    SAMPLER_MODE: 'UNIFORMLY'
+    DATASET_NAME: iMiGUE_official_val
+  NUM_CLASSES: 32
+
+MODEL:
+  JOINT_BONE_FEATURE_FUSION: True
+  FUSION_JOINT_CONFIG: 'imigue_sk_joint_ie_officialvaltrain_ep20'
+  FUSION_BONE_CONFIG: 'imigue_sk_bone_ie_officialvaltrain_ep20'
+  FUSION_JOINT_CHECKPOINT: 'output/sk/checkpoints/train/sk_maga/imigue_sk_maga_ep30/SKMagaModel_ep0025.pth.tar'
+  FUSION_BONE_CHECKPOINT: 'output/sk/checkpoints/train/sk_maga/imigue_sk_maga_bone_ep30/SKMagaModel_ep0025.pth.tar'
+  JB_FUSION_PROJ_DIM: 256
+  FUSION_DROPOUT: 0.2
+
+TRAIN:
+  BATCH_SIZE: 8
+  NUM_WORKER: 8
+  LR: 1e-5
+  EPOCH: 20
+  WARM_UP_EPOCH: 5
+  OPTIMIZER: 'ADAMW'
+  WEIGHT_DECAY: 0.05
+  SAVE_EVERY_EPOCH: True
+  LOAD_LATEST: False
+  FUSION_FREEZE_BACKBONES: False
+  FUSION_FREEZE_EPOCHS: 0
+  FUSION_BACKBONE_LR_MULT: 0.1
+  JB_FUSION_WEIGHT: 1.0
+  JB_JOINT_WEIGHT: 1.0
+  JB_BONE_WEIGHT: 1.0
+  JB_KL_JOINT_FROM_BONE_WEIGHT: 1.0
+  JB_KL_BONE_FROM_JOINT_WEIGHT: 1.0
+  JB_KD_TEMPERATURE: 2.0
+  SCHEDULER:
+    TYPE: 'warmup_and_cosine'
+    INITIAL_LR: 1e-6
+    MIN_LR: 1e-7

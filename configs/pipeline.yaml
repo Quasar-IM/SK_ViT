@@ -1,0 +1,15 @@
+project_root: 
+
+env:
+  imigue_rgb_trainval_root: 
+  imigue_sk_trainval_root: 
+  imigue_rgb_test_root: 
+  imigue_sk_test_root: 
+
+commands:
+  train_all:
+    - bash scripts/final_train/run_all_train.sh
+  sub_all:
+    - bash scripts/final_sub/run_all_sub.sh
+  repro_sub:
+    - bash repro_laststep_weights/run_repro_sub.sh
